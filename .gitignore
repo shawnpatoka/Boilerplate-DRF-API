@@ -1,0 +1,25 @@
+*.pyc
+/backend/db.sqlite3
+.DS_Store
+.env
+*/settings/local.py
+/staticfiles/*
+/mediafiles/*
+__pycache__/
+/.vscode/
+db.sqlite3
+
+
+# data
+*.dump
+
+# npm
+node_modules/
+npm-debug.log
+
+/venv/
+/env/
+/output/
+/cache/
+
+
