@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
+from .manual_auth import custom_authorize_token, CustomAuth
 
 class EndpointsView(APIView):
     def get(self, request):
@@ -22,28 +22,29 @@ class EndpointsView(APIView):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([CustomAuth])
 def protected_view(request):
-    user = request.user
-    print("this is the user:",user)
-    return Response({'message': f'Hello, {user.email}! This is a protected view.'})
+    print("In protect function view")
+    data = {
+        'message': 'This is a protected class view.',
+    }
+    return Response(data)
 
 
 
 
 
 class ProtectedClassView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [CustomAuth]
 
     def get(self, request):
-        user = request.user
-        print("this is the user:", user)
+        # user = request.user
+        print("In ProtectedClassView")
         data = {
-            'message': 'This is a protected view.',
-            'email': user.email,
-            'first_name':user.first_name,
-            'last_name':user.last_name,
-            'is_admin':user.is_admin,
-
+            'message': 'This is a protected class view.',
+            # 'email': user.email,
+            # 'first_name':user.first_name,
+            # 'last_name':user.last_name,
+            # 'is_admin':user.is_admin,
         }
         return Response(data)
