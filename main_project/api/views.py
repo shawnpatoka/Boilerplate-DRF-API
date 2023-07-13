@@ -17,6 +17,7 @@ class EndpointsView(APIView):
             'logout': '/api/logout/',
             'protected_class_view': '/api/protected-class/',
             'protected_function_view': '/api/protected-function/',
+            'user_profile': '/api/user/',
         }
         return Response(data)
     

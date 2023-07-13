@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import protected_view, ProtectedClassView, EndpointsView
+from .views import protected_view, ProtectedClassView, EndpointsView, UserProfile
 from .auth_views import CustomTokenObtainPairView, CustomRefreshTokenView
 
 urlpatterns = [
@@ -16,4 +16,7 @@ urlpatterns = [
     # protected views
     path('protected-class/', ProtectedClassView.as_view(), name='protected-class-view'),
     path('protected-function/', protected_view, name='protected-view'),
+
+    # user profule
+    path('user/', UserProfile.as_view(), name='user-profile'),
 ]
