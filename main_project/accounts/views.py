@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from api.manual_auth import CustomAuth
 
 class UserRegistrationView(APIView):
     def post(self, request):
@@ -18,7 +18,7 @@ class UserRegistrationView(APIView):
 
 
 class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [CustomAuth]
 
     def post(self, request):
         try:

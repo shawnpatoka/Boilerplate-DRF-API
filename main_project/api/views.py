@@ -4,7 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .manual_auth import custom_authorize_token, CustomAuth
+from .manual_auth import CustomAuth
+from .utilities import get_user_object
+
 
 class EndpointsView(APIView):
     def get(self, request):
@@ -20,13 +22,30 @@ class EndpointsView(APIView):
     
 
 
+class UserProfile(APIView):
+    permission_classes = [CustomAuth]
+
+    def get(self, request):
+        user = get_user_object(request.COOKIES.get("access_token"))
+        data = {
+            # user info to be stored in react state
+            'message': 'This the user profile.',
+            'email': user.email,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'is_admin':user.is_admin,
+        }
+        return Response(data)
+
+
+
 
 @api_view(['GET'])
 @permission_classes([CustomAuth])
 def protected_view(request):
     print("In protect function view")
     data = {
-        'message': 'This is a protected class view.',
+        'message': 'This is a protected function view.',
     }
     return Response(data)
 
@@ -38,13 +57,8 @@ class ProtectedClassView(APIView):
     permission_classes = [CustomAuth]
 
     def get(self, request):
-        # user = request.user
         print("In ProtectedClassView")
         data = {
             'message': 'This is a protected class view.',
-            # 'email': user.email,
-            # 'first_name':user.first_name,
-            # 'last_name':user.last_name,
-            # 'is_admin':user.is_admin,
         }
         return Response(data)
